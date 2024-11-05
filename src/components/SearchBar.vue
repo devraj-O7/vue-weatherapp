@@ -3,67 +3,74 @@
     <input
       v-model="city"
       @input="onInput"
-      @keydown.enter="selectCity(city)"
+      @keydown.enter="searchCity"
       placeholder="Enter city name"
     />
-    <ul v-if="suggestions.length" class="suggestions-list">
-      <li v-for="(suggestion, index) in suggestions" :key="index" @click="selectCity(suggestion.name)">
-        {{ suggestion.name }}
+    <ul v-if="store.suggestions.length" class="suggestions-list">
+      <li
+        v-for="(suggestion, index) in store.suggestions"
+        :key="index"
+        @click="selectCity(suggestion.name)"
+      >
+        {{ suggestion.name }} ({{ suggestion.country }})
       </li>
     </ul>
   </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
+import { defineComponent, ref } from 'vue'
+import { useWeatherStore } from '../stores/weather'
 
-export default {
+export default defineComponent({
   emits: ['searchCity'],
   setup(_, { emit }) {
     const city = ref('')
-    const suggestions = ref([])
-
-    let debounceTimer
-    const fetchSuggestions = async (query) => {
-      if (!query) {
-        suggestions.value = []
-        return
-      }
-      try {
-        const apiKey = import.meta.env.VITE_API_KEY
-        const response = await axios.get(`https://api.openweathermap.org/geo/1.0/direct?q=${query}&limit=5&appid=${apiKey}`)
-        suggestions.value = response.data.map((item) => ({ name: item.name, country: item.country }))
-      } catch (error) {
-        console.error("Error fetching city suggestions:", error)
-      }
-    }
+    const store = useWeatherStore()
+    let debounceTimer: ReturnType<typeof setTimeout>
 
     const onInput = () => {
       clearTimeout(debounceTimer)
-      debounceTimer = setTimeout(() => fetchSuggestions(city.value), 300)
+      debounceTimer = setTimeout(async () => {
+        if (city.value) {
+          await store.fetchCitySuggestions(city.value)
+        } else {
+          store.suggestions = []
+        }
+      }, 100)
     }
 
-    const selectCity = (selectedCity) => {
+    const searchCity = () => {
+      if (city.value.trim()) {
+        emit('searchCity', city.value)
+        store.suggestions = [] 
+      } else {
+        console.error('City name cannot be empty')
+      }
+    }
+
+    const selectCity = (selectedCity: string) => {
       city.value = selectedCity
-      suggestions.value = []
       emit('searchCity', selectedCity)
+      store.suggestions = []
+      store.fetchWeatherData(selectedCity)
     }
 
     return {
       city,
-      suggestions,
       onInput,
-      selectCity
+      searchCity,
+      selectCity,
+      store,
     }
-  }
-}
+  },
+})
 </script>
 
 <style scoped>
 .search-bar {
   position: relative;
-  padding-bottom: 2rem;
+  margin-bottom: 1em;
 }
 input {
   padding: 0.5em;

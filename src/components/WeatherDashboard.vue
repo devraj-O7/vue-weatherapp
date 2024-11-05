@@ -19,15 +19,22 @@ import SearchBar from './SearchBar.vue'
 import WeatherDisplay from './WeatherDisplay.vue'
 import ToggleSwitch from './ToggleSwitch.vue'
 
+interface WeatherData {
+  name: string
+  main: { temp: number; humidity: number }
+  wind: { speed: number }
+  weather: Array<{ description: string }>
+}
+
 export default {
   components: { SearchBar, WeatherDisplay, ToggleSwitch },
   setup() {
-    const weatherData = ref(null)
+    const weatherData = ref<WeatherData | null>(null) // Specify the type
     const isCelsius = ref(true)
     const loading = ref(false)
-    const error = ref(null)
+    const error = ref<string | null>(null) // Specify the type
 
-    const fetchWeatherData = async (city) => {
+    const fetchWeatherData = async (city: string) => {
       loading.value = true
       error.value = null
       try {

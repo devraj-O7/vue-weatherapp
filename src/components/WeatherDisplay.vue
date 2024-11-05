@@ -1,10 +1,10 @@
 <template>
   <div class="weather-display">
-    <h2>{{ data.name }}</h2>
-    <p>{{ data.weather[0].description }}</p>
-    <p>Temperature: {{ data.main.temp }}° {{ isCelsius ? 'C' : 'F' }}</p>
-    <p>Humidity: {{ data.main.humidity }}%</p>
-    <p>Wind Speed: {{ data.wind.speed }} {{ isCelsius ? 'm/s' : 'mph' }}</p>
+    <h2 v-if="data">{{ data.name }}</h2>
+    <p v-if="data && data.weather">{{ data.weather[0].description }}</p>
+    <p v-if="data && data.main">Temperature: {{ data.main.temp }}° {{ isCelsius ? 'C' : 'F' }}</p>
+    <p v-if="data && data.main">Humidity: {{ data.main.humidity }}%</p>
+    <p v-if="data && data.wind">Wind Speed: {{ data.wind.speed }} {{ isCelsius ? 'm/s' : 'mph' }}</p>
   </div>
 </template>
 
