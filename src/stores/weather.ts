@@ -12,6 +12,7 @@ export const useWeatherStore = defineStore('weather', () => {
 
   const fetchWeatherData = async (city: string) => {
     loading.value = true
+    weatherData.value=null;
     error.value = null
     try {
       const apiKey = import.meta.env.VITE_API_KEY

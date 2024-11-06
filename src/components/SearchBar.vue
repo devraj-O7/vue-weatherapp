@@ -42,9 +42,9 @@ export default defineComponent({
     }
 
     const searchCity = () => {
+      store.suggestions = [] 
       if (city.value.trim()) {
         emit('searchCity', city.value)
-        store.suggestions = [] 
       } else {
         console.error('City name cannot be empty')
       }
