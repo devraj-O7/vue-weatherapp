@@ -32,20 +32,23 @@ export default {
 
 <style scoped>
 .weather-dashboard {
-  background-color: #f0f0f0; 
-  padding: 1em;
-  border-radius: 5px; 
-  display: flex;
+  background-color: #333; 
+  color: white; 
+  padding: 2em; 
+  border-radius: 10px; 
+  display: flex; 
   flex-direction: column; 
   align-items: center; 
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); 
 }
 p {
-  color: #333; 
+  color: #ddd; 
 }
 
 @media (max-width: 600px) {
   .weather-dashboard {
-    padding: 0.5em; 
+    padding: 1em; 
+    width: 100%;
   }
 }
 </style>

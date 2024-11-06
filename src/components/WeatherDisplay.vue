@@ -1,10 +1,13 @@
 <template>
   <div class="weather-display">
-    <h2 v-if="data">{{ data.name }}</h2>
-    <p v-if="data && data.weather">{{ data.weather[0].description }}</p>
-    <p v-if="data && data.main">Temperature: {{ data.main.temp }}° {{ isCelsius ? 'C' : 'F' }}</p>
-    <p v-if="data && data.main">Humidity: {{ data.main.humidity }}%</p>
-    <p v-if="data && data.wind">Wind Speed: {{ data.wind.speed }} {{ isCelsius ? 'm/s' : 'mph' }}</p>
+    <img v-if="data && data.weather" :src="`http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`" alt="Weather Icon" class="weather-icon" />
+    <div class="weather-info">
+      <h2 v-if="data">{{ data.name }}</h2>
+      <p v-if="data && data.weather">{{ data.weather[0].description }}</p>
+      <p v-if="data && data.main">Temperature: {{ data.main.temp }}° {{ isCelsius ? 'C' : 'F' }}</p>
+      <p v-if="data && data.main">Humidity: {{ data.main.humidity }}%</p>
+      <p v-if="data && data.wind">Wind Speed: {{ data.wind.speed }} {{ isCelsius ? 'm/s' : 'mph' }}</p>
+    </div>
   </div>
 </template>
 
@@ -19,23 +22,43 @@ export default {
 
 <style scoped>
 .weather-display {
-  text-align: center;
-  background-color: #f0f0f0; 
-  padding: 1em;
-  border-radius: 5px; 
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: white;
+  text-align: left;
+  padding: 1.5em;
   width: 100%;
-  max-width: 400px;
 }
+
+.weather-icon {
+  width: 100px;
+  height: auto;
+  margin-right: 1em;
+}
+
+.weather-info {
+  flex: 1;
+  text-transform: uppercase;
+}
+
 h2 {
   color: #4CAF50;
 }
+
 p {
-  color: #333; 
+  color: #ddd;
 }
 
 @media (max-width: 600px) {
   .weather-display {
-    padding: 0.5em; 
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .weather-icon {
+    margin-bottom: 1em;
   }
 }
 </style>

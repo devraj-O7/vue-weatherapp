@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <h1>Weather Dashboard</h1>
+    <h1>Weather App</h1>
     <WeatherDashboard />
   </div>
 </template>
@@ -17,22 +17,24 @@ export default {
 </script>
 
 <style>
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 #app {
-  font-family: Arial, sans-serif;
-  text-align: center;
-}
-.weather-dashboard {
-  max-width: 600px;
-  margin: auto;
-}
-h1{
- color:  #4CAF50
+  background-color: #222;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
-@media (max-width: 600px) {
-  .weather-dashboard {
-    padding: 1em;
-  }
+h1 {
+  color: #4CAF50;
+  margin-bottom: 20px;
+  text-transform: uppercase;
 }
-
 </style>

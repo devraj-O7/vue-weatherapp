@@ -22,7 +22,7 @@ export default {
 .toggle-switch {
   text-align: center;
   /* margin-bottom: 1em; */
-  background-color: #f0f0f0; 
+  background-color: #333; 
   padding: 1em;
   border-radius: 5px; 
   width: 100%; 

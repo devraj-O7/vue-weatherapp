@@ -51,9 +51,9 @@ export default defineComponent({
     }
 
     const selectCity = (selectedCity: string) => {
+      store.suggestions = []
       city.value = selectedCity
       emit('searchCity', selectedCity)
-      store.suggestions = []
       store.fetchWeatherData(selectedCity)
     }
 
@@ -83,6 +83,7 @@ input {
   box-sizing: border-box;
   border: 1px solid #ccc;
   border-radius: 5px;
+  padding-top: 8px;
 }
 
 .suggestions-list {
@@ -100,6 +101,9 @@ input {
 .suggestions-list li {
   padding: 0.5em;
   cursor: pointer;
+  background: #ccc;
+  color: black;
+  
 }
 .suggestions-list li:hover {
   background: #d0f0c0;
