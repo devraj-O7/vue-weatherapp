@@ -71,12 +71,19 @@ export default defineComponent({
 .search-bar {
   position: relative;
   margin-bottom: 1em;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  display: flex;
 }
+
 input {
   padding: 0.5em;
   width: 100%;
   box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
+
 .suggestions-list {
   position: absolute;
   top: 100%;
@@ -94,6 +101,12 @@ input {
   cursor: pointer;
 }
 .suggestions-list li:hover {
-  background: #f0f0f0;
+  background: #d0f0c0;
+}
+
+@media (max-width: 600px) {
+  input {
+    font-size: 14px;
+  }
 }
 </style>

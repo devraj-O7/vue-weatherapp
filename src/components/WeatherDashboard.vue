@@ -29,3 +29,23 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.weather-dashboard {
+  background-color: #f0f0f0; 
+  padding: 1em;
+  border-radius: 5px; 
+  display: flex;
+  flex-direction: column; 
+  align-items: center; 
+}
+p {
+  color: #333; 
+}
+
+@media (max-width: 600px) {
+  .weather-dashboard {
+    padding: 0.5em; 
+  }
+}
+</style>

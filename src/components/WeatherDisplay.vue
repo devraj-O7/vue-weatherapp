@@ -20,5 +20,22 @@ export default {
 <style scoped>
 .weather-display {
   text-align: center;
+  background-color: #f0f0f0; 
+  padding: 1em;
+  border-radius: 5px; 
+  width: 100%;
+  max-width: 400px;
+}
+h2 {
+  color: #4CAF50;
+}
+p {
+  color: #333; 
+}
+
+@media (max-width: 600px) {
+  .weather-display {
+    padding: 0.5em; 
+  }
 }
 </style>

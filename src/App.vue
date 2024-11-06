@@ -25,6 +25,9 @@ export default {
   max-width: 600px;
   margin: auto;
 }
+h1{
+ color:  #4CAF50
+}
 
 @media (max-width: 600px) {
   .weather-dashboard {
