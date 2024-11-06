@@ -1,70 +1,31 @@
 <template>
   <div class="weather-dashboard">
-    <SearchBar @searchCity="fetchWeatherData" />
-    <ToggleSwitch @toggle="toggleUnit" />
+    <SearchBar @searchCity="weatherStore.fetchWeatherData" />
+    <ToggleSwitch @toggle="weatherStore.toggleUnit" />
     <WeatherDisplay
-      v-if="weatherData"
-      :data="weatherData"
-      :isCelsius="isCelsius"
+      v-if="weatherStore.weatherData"
+      :data="weatherStore.weatherData"
+      :isCelsius="weatherStore.isCelsius"
     />
-    <p v-if="error">{{ error }}</p>
-    <p v-if="loading">Loading...</p>
+    <p v-if="weatherStore.error">{{ weatherStore.error }}</p>
+    <p v-if="weatherStore.loading">Loading...</p>
   </div>
 </template>
 
 <script lang="ts">
-import { ref } from 'vue'
-import axios from 'axios'
-import SearchBar from './SearchBar.vue'
-import WeatherDisplay from './WeatherDisplay.vue'
-import ToggleSwitch from './ToggleSwitch.vue'
-
-interface WeatherData {
-  name: string
-  main: { temp: number; humidity: number }
-  wind: { speed: number }
-  weather: Array<{ description: string }>
-}
+import { useWeatherStore } from '../stores/weather'; 
+import SearchBar from './SearchBar.vue';
+import WeatherDisplay from './WeatherDisplay.vue';
+import ToggleSwitch from './ToggleSwitch.vue';
 
 export default {
   components: { SearchBar, WeatherDisplay, ToggleSwitch },
   setup() {
-    const weatherData = ref<WeatherData | null>(null) // Specify the type
-    const isCelsius = ref(true)
-    const loading = ref(false)
-    const error = ref<string | null>(null) // Specify the type
-
-    const fetchWeatherData = async (city: string) => {
-      loading.value = true
-      error.value = null
-      try {
-        const apiKey = import.meta.env.VITE_API_KEY
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${isCelsius.value ? 'metric' : 'imperial'}`
-        )
-        weatherData.value = response.data
-      } catch {
-        error.value = "City not found. Please try another search."
-      } finally {
-        loading.value = false
-      }
-    }
-
-    const toggleUnit = () => {
-      isCelsius.value = !isCelsius.value
-      if (weatherData.value) {
-        fetchWeatherData(weatherData.value.name)
-      }
-    }
+    const weatherStore = useWeatherStore(); 
 
     return {
-      weatherData,
-      isCelsius,
-      loading,
-      error,
-      fetchWeatherData,
-      toggleUnit
-    }
-  }
-}
+      weatherStore,
+    };
+  },
+};
 </script>
