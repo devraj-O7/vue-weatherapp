@@ -1,19 +1,7 @@
-
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
-
-export interface WeatherData {
-  name: string
-  main: { temp: number; humidity: number }
-  wind: { speed: number }
-  weather: Array<{ description: string }>
-}
-
-export interface CitySuggestion {
-  name: string
-  country: string
-}
+import type { WeatherData, CitySuggestion } from '../types/global'
 
 export const useWeatherStore = defineStore('weather', () => {
   const weatherData = ref<WeatherData | null>(null)

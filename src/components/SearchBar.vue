@@ -22,6 +22,7 @@
 import { defineComponent, ref } from 'vue'
 import { useWeatherStore } from '../stores/weather'
 
+
 export default defineComponent({
   emits: ['searchCity'],
   setup(_, { emit }) {
